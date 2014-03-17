@@ -25,10 +25,6 @@
         /* Setup your scene here */
         grid = aGrid;
         displayedTiles = [NSMutableArray arrayWithCapacity: grid.width * grid.height];
-        [self setupGestureRecognizers];
-        [self setupGridTiles];
-        [self setupScoreNode];
-        [self displayGrid];
     }
     return self;
 }
@@ -37,6 +33,14 @@
 {
     grid = nil;
     displayedTiles = nil;
+}
+
+- (void) didMoveToView:(SKView *)view
+{
+    [self setupGestureRecognizers];
+    [self setupGridTiles];
+    [self setupScoreNode];
+    [self displayGrid];
 }
 
 - (void) setupGestureRecognizers
@@ -76,32 +80,29 @@
     CGFloat tileWidth = (self.frame.size.width  - intersWidth) / grid.width;
     CGFloat basey =     (self.frame.size.height - self.frame.size.width) / 2;
 
-    CGFloat tx =         5 + ((column - 1) * tileWidth) + (10 * (column - 1));
-    CGFloat ty = basey + 5 + ((row    - 1) * tileWidth) + (10 * (row    - 1));
-    const CGAffineTransform transform = CGAffineTransformMakeTranslation(tx, ty);
+    CGFloat tx = 5 + ((column - 1) * tileWidth) + (10 * (column - 1));
+    CGFloat ty = self.frame.size.height - basey - 5 - row * tileWidth - (10 * (row - 1));
+    CGPoint position = CGPointMake(tx, ty);
 
     CGMutablePathRef tilePath = CGPathCreateMutable();
-    CGPathAddRect(tilePath, &transform, CGRectMake(0, 0, tileWidth, tileWidth));
+    CGPathAddRect(tilePath, NULL, CGRectMake(0, 0, tileWidth, tileWidth));
+
     SKShapeNode* node = [[SKShapeNode alloc] init];
     node.path        = tilePath;
     node.strokeColor = color;
     node.fillColor   = color;
+    node.position = position;
     return node;
 }
 
-- (SKLabelNode*) nodeForNumber: (MDTile) number atRow: (NSUInteger) row column: (NSUInteger) column withColor: (SKColor*) color
+- (SKLabelNode*) nodeForNumber: (MDTile) number onNode: (SKNode*) tile withColor: (SKColor*) color
 {
     CGFloat intersWidth = 10 * (grid.width);
     CGFloat tileWidth = (self.frame.size.width  - intersWidth) / grid.width;
-    CGFloat basey =     (self.frame.size.height - self.frame.size.width) / 2;
 
-    CGFloat tx =         5 + ((column - 1) * tileWidth) + (10 * (column - 1));
-    CGFloat ty = basey + 5 + ((row    - 1) * tileWidth) + (10 * (row    - 1));
-
-    SKLabelNode* node = [SKLabelNode labelNodeWithFontNamed: @"Chalkduster"];
+    SKLabelNode* node = [SKLabelNode labelNodeWithFontNamed: @"HelveticaNeue-Bold"];
     node.text     = [NSString stringWithFormat: @"%d", number];
-    node.position = CGPointMake(tx + tileWidth / 2 - (node.fontSize / 2),
-                                ty + tileWidth / 2 - (node.fontSize / 2));
+    node.position = CGPointMake(node.position.x + tileWidth / 2, node.position.y + tileWidth / 2 - node.fontSize / 2);
     node.fontColor = color;
     return node;
 }
@@ -118,6 +119,14 @@
         for(int row = 1; row <= grid.height; ++row){
             SKShapeNode* node = [self nodeForBackgroundTileAtRow: row column: col withColor: color];
             [self addChild: node];
+#ifdef DEBUG
+            SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed: @"Courier"];
+            label.text = [NSString stringWithFormat: @"%d,%d", row, col];
+            label.position = CGPointMake(node.position.x + 12, node.position.y + 2);
+            label.fontSize = 12;
+            label.fontColor = [SKColor blackColor];
+            [self addChild: label];
+#endif
         }
     }
 }
@@ -144,9 +153,10 @@
             MDTile tile = [grid tileAtRow: row column: col];
             if(tile != kEmptyTile){
                 SKShapeNode* node  = [self nodeForBackgroundTileAtRow: row column: col withColor: tileColor];
-                SKLabelNode* label = [self nodeForNumber: tile  atRow: row column: col withColor: textColor];
+                SKLabelNode* label = [self nodeForNumber: tile onNode: node withColor: textColor];
                 [node addChild: label];
                 [self addChild: node];
+                [displayedTiles addObject: node];
             }
         }
     }
@@ -166,11 +176,7 @@
 	[grid swipeToTheBottom]; break;
     }
     [self undisplayAllTiles];
+    [grid addRandomTiles: 1];
     [self displayGrid];
 }
-
--(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
-}
-
 @end

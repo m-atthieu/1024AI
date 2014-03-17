@@ -262,27 +262,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "1024AI/MDGridScene.m"
-            timestampString = "416774615.128987"
+            timestampString = "416778120.500003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "-nodeForNumber:atRow:column:withColor:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "1024AI/MDGridScene.m"
-            timestampString = "416774811.087538"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "-displayGrid"
             landmarkType = "5">
          </BreakpointContent>
@@ -294,11 +278,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "1024AI/MDGridScene.m"
-            timestampString = "416774831.729768"
+            timestampString = "416778120.500003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "-displayGrid"
             landmarkType = "5">
          </BreakpointContent>
@@ -311,11 +295,11 @@
             condition = "row == 2 &amp;&amp; column == 3"
             continueAfterRunningActions = "No"
             filePath = "1024AI/MDGridScene.m"
-            timestampString = "416774876.908055"
+            timestampString = "416778120.500003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "-displayGrid"
             landmarkType = "5">
          </BreakpointContent>
@@ -327,12 +311,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "1024AI/MDGridScene.m"
-            timestampString = "416775423.930616"
+            timestampString = "416778120.500003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "-nodeForBackgroundTileAtRow:column:withColor:"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "-nodeForNumber:onNode:withColor:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
