@@ -8,7 +8,7 @@
 
 #import "MDViewController.h"
 #import "MDGrid.h"
-#import "MDMyScene.h"
+#import "MDGridScene.h"
 
 @implementation MDViewController
 
@@ -23,8 +23,10 @@
     
     // Create and configure the scene.
     MDGrid* grid = [[MDGrid alloc] initWithWidth: 4 andHeight: 4];
-    [grid random: 2];
-    SKScene * scene = [[MDMyScene alloc] initWithSize: skView.bounds.size andGrid: grid];
+    [grid putTile: 4 row: 1 column: 1];
+    [grid putTile: 2 row: 2 column: 1];
+    //[grid addRandomTiles: 2];
+    SKScene * scene = [[MDGridScene alloc] initWithSize: skView.bounds.size andGrid: grid];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.

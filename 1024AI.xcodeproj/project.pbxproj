@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C47EF02318D7727200077EB4 /* MDGridScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C47EF02218D7727200077EB4 /* MDGridScene.m */; };
+		C47EF02518D773EB00077EB4 /* MDGridDelegationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */; };
 		C4BA131418D4BA240015219B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131318D4BA240015219B /* Foundation.framework */; };
 		C4BA131618D4BA240015219B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131518D4BA240015219B /* CoreGraphics.framework */; };
 		C4BA131818D4BA240015219B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131718D4BA240015219B /* UIKit.framework */; };
@@ -17,8 +19,6 @@
 		C4BA132918D4BA240015219B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BA132718D4BA240015219B /* Main_iPhone.storyboard */; };
 		C4BA132C18D4BA240015219B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BA132A18D4BA240015219B /* Main_iPad.storyboard */; };
 		C4BA132F18D4BA240015219B /* MDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA132E18D4BA240015219B /* MDViewController.m */; };
-		C4BA133218D4BA240015219B /* MDMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA133118D4BA240015219B /* MDMyScene.m */; };
-		C4BA133418D4BA240015219B /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = C4BA133318D4BA240015219B /* Spaceship.png */; };
 		C4BA133618D4BA240015219B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BA133518D4BA240015219B /* Images.xcassets */; };
 		C4BA133D18D4BA250015219B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA133C18D4BA250015219B /* XCTest.framework */; };
 		C4BA133E18D4BA250015219B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131318D4BA240015219B /* Foundation.framework */; };
@@ -26,8 +26,6 @@
 		C4BA134718D4BA250015219B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4BA134518D4BA250015219B /* InfoPlist.strings */; };
 		C4BA135318D4BA6A0015219B /* MDGridTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135218D4BA6A0015219B /* MDGridTest.m */; };
 		C4BA135618D4EDEF0015219B /* MDGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135518D4EDEF0015219B /* MDGrid.m */; };
-		C4BA135818D4EE9A0015219B /* MDTileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135718D4EE9A0015219B /* MDTileTest.m */; };
-		C4BA135B18D4EEEB0015219B /* MDTile.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135A18D4EEEB0015219B /* MDTile.m */; };
 		C4BA135D18D598060015219B /* MDSwipeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135C18D598060015219B /* MDSwipeTest.m */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C47EF02118D7727200077EB4 /* MDGridScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGridScene.h; sourceTree = "<group>"; };
+		C47EF02218D7727200077EB4 /* MDGridScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridScene.m; sourceTree = "<group>"; };
+		C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridDelegationTest.m; sourceTree = "<group>"; };
 		C4BA131018D4BA240015219B /* 1024AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1024AI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BA131318D4BA240015219B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C4BA131518D4BA240015219B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -57,9 +58,6 @@
 		C4BA132B18D4BA240015219B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		C4BA132D18D4BA240015219B /* MDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDViewController.h; sourceTree = "<group>"; };
 		C4BA132E18D4BA240015219B /* MDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDViewController.m; sourceTree = "<group>"; };
-		C4BA133018D4BA240015219B /* MDMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDMyScene.h; sourceTree = "<group>"; };
-		C4BA133118D4BA240015219B /* MDMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDMyScene.m; sourceTree = "<group>"; };
-		C4BA133318D4BA240015219B /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		C4BA133518D4BA240015219B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C4BA133B18D4BA250015219B /* 1024AITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 1024AITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BA133C18D4BA250015219B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -68,9 +66,6 @@
 		C4BA135218D4BA6A0015219B /* MDGridTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridTest.m; sourceTree = "<group>"; };
 		C4BA135418D4EDEF0015219B /* MDGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGrid.h; sourceTree = "<group>"; };
 		C4BA135518D4EDEF0015219B /* MDGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGrid.m; sourceTree = "<group>"; };
-		C4BA135718D4EE9A0015219B /* MDTileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTileTest.m; sourceTree = "<group>"; };
-		C4BA135918D4EEEB0015219B /* MDTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTile.h; sourceTree = "<group>"; };
-		C4BA135A18D4EEEB0015219B /* MDTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTile.m; sourceTree = "<group>"; };
 		C4BA135C18D598060015219B /* MDSwipeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipeTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,21 +128,18 @@
 		C4BA131B18D4BA240015219B /* 1024AI */ = {
 			isa = PBXGroup;
 			children = (
+				C47EF02118D7727200077EB4 /* MDGridScene.h */,
+				C47EF02218D7727200077EB4 /* MDGridScene.m */,
 				C4BA132418D4BA240015219B /* MDAppDelegate.h */,
 				C4BA132518D4BA240015219B /* MDAppDelegate.m */,
 				C4BA132718D4BA240015219B /* Main_iPhone.storyboard */,
 				C4BA132A18D4BA240015219B /* Main_iPad.storyboard */,
 				C4BA132D18D4BA240015219B /* MDViewController.h */,
 				C4BA132E18D4BA240015219B /* MDViewController.m */,
-				C4BA133018D4BA240015219B /* MDMyScene.h */,
-				C4BA133118D4BA240015219B /* MDMyScene.m */,
-				C4BA133318D4BA240015219B /* Spaceship.png */,
 				C4BA133518D4BA240015219B /* Images.xcassets */,
 				C4BA131C18D4BA240015219B /* Supporting Files */,
 				C4BA135418D4EDEF0015219B /* MDGrid.h */,
 				C4BA135518D4EDEF0015219B /* MDGrid.m */,
-				C4BA135918D4EEEB0015219B /* MDTile.h */,
-				C4BA135A18D4EEEB0015219B /* MDTile.m */,
 			);
 			path = 1024AI;
 			sourceTree = "<group>";
@@ -167,9 +159,9 @@
 			isa = PBXGroup;
 			children = (
 				C4BA134318D4BA250015219B /* Supporting Files */,
-				C4BA135718D4EE9A0015219B /* MDTileTest.m */,
 				C4BA135218D4BA6A0015219B /* MDGridTest.m */,
 				C4BA135C18D598060015219B /* MDSwipeTest.m */,
+				C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */,
 			);
 			path = 1024AITests;
 			sourceTree = "<group>";
@@ -260,7 +252,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4BA133418D4BA240015219B /* Spaceship.png in Resources */,
 				C4BA133618D4BA240015219B /* Images.xcassets in Resources */,
 				C4BA132C18D4BA240015219B /* Main_iPad.storyboard in Resources */,
 				C4BA132918D4BA240015219B /* Main_iPhone.storyboard in Resources */,
@@ -283,12 +274,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4BA135B18D4EEEB0015219B /* MDTile.m in Sources */,
+				C47EF02318D7727200077EB4 /* MDGridScene.m in Sources */,
 				C4BA132218D4BA240015219B /* main.m in Sources */,
 				C4BA135618D4EDEF0015219B /* MDGrid.m in Sources */,
 				C4BA132F18D4BA240015219B /* MDViewController.m in Sources */,
 				C4BA132618D4BA240015219B /* MDAppDelegate.m in Sources */,
-				C4BA133218D4BA240015219B /* MDMyScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,8 +286,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4BA135818D4EE9A0015219B /* MDTileTest.m in Sources */,
 				C4BA135318D4BA6A0015219B /* MDGridTest.m in Sources */,
+				C47EF02518D773EB00077EB4 /* MDGridDelegationTest.m in Sources */,
 				C4BA135D18D598060015219B /* MDSwipeTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +497,7 @@
 				C4BA134E18D4BA250015219B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C4BA134F18D4BA250015219B /* Build configuration list for PBXNativeTarget "1024AITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +506,7 @@
 				C4BA135118D4BA250015219B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

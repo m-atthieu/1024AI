@@ -8,57 +8,68 @@
 
 #import "MDGrid.h"
 
+#define GRID(r, c) (_grid[(r) * width + (c)])
+#define CAN_COMBINE(t1, t2) ((t1) == (t2))
+#define COMBINE(t1, t2) ((t1) + (t2))
+
 @interface MDGrid ()
-@property (assign) NSUInteger filled;
+{
+    MDTile* _grid;
+}
+@property (strong) NSMutableSet* empty;
+
 - (NSArray*) treat: (NSArray*) line;
+
+- (BOOL) canSwipeToLeft;
+- (BOOL) canSwipeToRight;
+- (BOOL) canSwipeToTop;
+- (BOOL) canSwipeToBottom;
 @end
 
 @implementation MDGrid
-@synthesize tiles;
 @synthesize width;
 @synthesize height;
-@synthesize filled;
+@synthesize empty;
+@synthesize delegate;
 
 - (id) initWithWidth: (NSUInteger) aWidth andHeight: (NSUInteger) aHeight
 {
     NSParameterAssert( aWidth > 0);
     NSParameterAssert(aHeight > 0);
     NSParameterAssert(aWidth == aHeight);
-
+    
     if(self = [super init]){
-        filled = 0;
         width = aWidth;
         height = aHeight;
-        tiles = [NSMutableArray arrayWithCapacity: height];
-        for(int i = 0; i <= height; ++i){
-            NSMutableArray* line = [NSMutableArray arrayWithCapacity: width];
-            for (int j = 0; j < width; ++j) {
-                [line setObject: [NSNull null] atIndexedSubscript: j];
-            }
-            [tiles setObject: line atIndexedSubscript: i];
-        }
+	delegate = nil;
+        _grid = calloc(width * height, sizeof(MDTile));
+	empty = [NSMutableSet set];
+	for(int i = 1; i <= width; ++i){
+	    for(int j = 1; j <= height; ++j){
+            [empty addObject: NSStringFromCGPoint(CGPointMake(i, j))];
+	    }
+	}
+	
     }
     return self;
 }
 
-- (void) random: (NSUInteger) number
+- (void) dealloc
 {
-    [self putTile: [[MDTile alloc] initWithNumber: 2] row: 2 column: 2];
-    [self putTile: [[MDTile alloc] initWithNumber: 2] row: 1 column: 3];
-    self.filled += 2;
+    free(_grid);
 }
 
 - (NSString*) description
 {
     NSString* desc = @"";
-    MDTile* tile;
+    MDTile tile;
     for(int i = 0; i < height; ++i){
         for(int j = 0; j < width; ++j){
             tile = [self tileAtRow: i + 1 column: j + 1];
-            if(tile == nil){
+            if(tile == kEmptyTile){
                 desc = [desc stringByAppendingString: @"0 "];
             } else {
-                desc = [desc stringByAppendingFormat: @"%d ", [tile number]];
+                desc = [desc stringByAppendingFormat: @"%d ", tile];
             }
         }
         desc = [desc stringByAppendingString: @";"];
@@ -66,161 +77,234 @@
     return desc;
 }
 
-- (void) putTile: (MDTile*) tile row: (NSUInteger) row column: (NSUInteger) column
+#pragma mark - Game Management
+
+- (void) addRandomTiles: (NSUInteger) toFill
+{
+    for(NSUInteger i = 0; i < toFill; ++i){
+	NSString* s = [[empty allObjects] objectAtIndex: arc4random_uniform([empty count])];
+    CGPoint random = CGPointFromString(s);
+	[self putTile: 2 row: random.x column: random.y];
+	if(delegate){ [delegate grid: self tile: 2 appearedAtRow: random.x column: random.y]; }
+        [empty minusSet: [NSSet setWithObject: [NSValue valueWithCGPoint: random]]];
+    }
+}
+
+- (BOOL) isGameOver
+{
+    if([empty count] != 0){ return NO; }
+    
+    return [self canSwipeToLeft] || [self canSwipeToRight] || [self canSwipeToTop] || [self canSwipeToBottom];
+}
+
+- (BOOL) canSwipeToLeft
+{
+    BOOL can = NO;
+    for(int row = 0; row < height; ++row){
+	for(int col = 0; col < width - 1; ++col){
+	    if(CAN_COMBINE(GRID(row, col), GRID(row, col + 1))){
+		can = YES;
+	    }
+	}
+    }
+    return can;
+}
+
+- (BOOL) canSwipeToRight
+{
+    BOOL can = NO;
+    for(int row = 0; row < height; ++row){
+	for(int col = 1; col < width; ++col){
+	    if(CAN_COMBINE(GRID(row, col - 1), GRID(row, col))){
+		can = YES;
+	    }
+	}
+    }
+    return can;
+}
+
+- (BOOL) canSwipeToTop
+{
+    BOOL can = NO;
+    for(int col = 0; col < width; ++col){
+	for(int row = 1; row < height; ++col){
+	    if(CAN_COMBINE(GRID(row, col), GRID(row - 1, col))){
+		can = YES;
+	    }
+	}
+    } 
+    return can;
+}
+
+- (BOOL) canSwipeToBottom
+{
+    BOOL can = NO;
+    for(int col = 0; col < width; ++col){
+	for(int row = 0; row < height - 1; ++col){
+	    if(CAN_COMBINE(GRID(row, col), GRID(row + 1, col))){
+		can = YES;
+	    }
+	}
+    } 
+    return can;
+}
+
+#pragma mark - Grid Management
+
+- (void) putTile: (MDTile) tile row: (NSUInteger) row column: (NSUInteger) column
 {
     NSParameterAssert(row >= 1);
     NSParameterAssert(column >= 1);
     NSParameterAssert(row <= height);
     NSParameterAssert(column <= width);
     
-    [[tiles objectAtIndex: row - 1] setObject: tile atIndex: column - 1];
+    GRID(row - 1, column - 1) = tile;
 }
 
-- (MDTile*) tileAtRow: (NSUInteger) row column: (NSUInteger) column
+- (MDTile) tileAtRow: (NSUInteger) row column: (NSUInteger) column
 {
     NSParameterAssert(row >= 1);
     NSParameterAssert(column >= 1);
     NSParameterAssert(row <= height);
     NSParameterAssert(column <= width);
 
-    MDTile* t = [[tiles objectAtIndex: row - 1] objectAtIndex: column - 1];
-    return (t == [NSNull null] ? nil: t);
+    return GRID(row - 1, column -1);
 }
 
 - (void) removeTileAtRow: (NSUInteger) row column: (NSUInteger) column
 {
-    [[tiles objectAtIndex: row - 1] setObject: [NSNull null] atIndex: column - 1];
+    GRID(row - 1, column - 1) = kEmptyTile;
+    [empty addObject: [NSValue valueWithCGPoint: CGPointMake(row, column)]];
 }
 
 #pragma mark - Movements
 
-- (NSArray*) treat:(NSMutableArray *)line
+- (void) treat: (MDTile*) line line: (NSUInteger) index
 {
-    NSMutableArray* newLine = [NSMutableArray arrayWithCapacity: width];
+    MDTile newLine[width];
     int k = 0;
     for(int i = 0; i < width; ++i){
-        if([line objectAtIndex: i] != nil){
-            [newLine setObject: [line objectAtIndex: i] atIndexedSubscript: k];
-            ++k;
-        }
+	if(line[i] != kEmptyTile){
+	    newLine[k] = line[i];
+	    if(delegate){ [delegate grid: self tileAtRow: index column: i movedToRow: index column: k]; }
+	    ++k;
+	}
     }
-    for(; k < width; ++k){ [newLine setObject: [NSNull null] atIndexedSubscript: k]; }
+    for(; k < width; ++k){ newLine[k] = kEmptyTile; }
 
-    MDTile* current, *next;
+    MDTile current, next;
     for(int i = 0; i < width - 1; ++i){
-        current = [newLine objectAtIndex: i];
-        next = [newLine objectAtIndex: i + 1];
-        if(current == [NSNull null]){
-            if(next != [NSNull null]){
-                [newLine setObject: next atIndexedSubscript: i];
-            } else {
-                [newLine setObject: [NSNull null] atIndexedSubscript: i];
-            }
-            [newLine setObject: [NSNull null] atIndexedSubscript: i + 1];
-            continue;
-        }
-        if([current canCombineWith: next]){
-            [newLine setObject: [current combineWith: next] atIndexedSubscript: i];
-            [newLine setObject: [NSNull null] atIndexedSubscript: i + 1];
-        }
+	current = newLine[i];
+	next = newLine[i + 1];
+	if(CAN_COMBINE(current, next)){
+	    newLine[i] = COMBINE(current, next);
+	    if(delegate){ [delegate grid: self tile: newLine[i] appearedAtRow: index column: i]; }
+	    newLine[i + 1] = kEmptyTile;
+	}
     }
-    return [newLine copy];
+    // copy
+    for(int i = 0; i < width; ++i){
+	line[i] = newLine[i];
+    }
+}
+
+- (void) treat: (MDTile*) line column: (NSUInteger) index
+{
+    MDTile newLine[height];
+    int k = 0;
+    for(int i = 0; i < height; ++i){
+	if(line[i] != kEmptyTile){
+	    newLine[k] = line[i];
+	    ++k;
+	}
+    }
+    for(; k < height; ++k){ newLine[k] = kEmptyTile; }
+
+    MDTile current, next;
+    for(int i = 0; i < height - 1; ++i){
+	current = newLine[i];
+	next = newLine[i + 1];
+	if(CAN_COMBINE(current, next)){
+	    newLine[i] = COMBINE(current, next);
+	    newLine[i + 1] = kEmptyTile;
+	}
+    }
+    // copy
+    for(int i = 0; i < width; ++i){
+	line[i] = newLine[i];
+    }
 }
 
 - (void) swipeToTheLeft
 {
-    int row = 0, column = 0;
-    NSMutableArray* line;
-    NSArray* newLine;
-    MDTile* tile;
-    for(row = 0; row < height; ++row){
-        line = [NSMutableArray arrayWithCapacity: width];
-        for(column = 0; column < width; ++column){
-            tile = [self tileAtRow: row + 1 column: column + 1];
-            if(tile != nil){
-                [line setObject: tile atIndexedSubscript: column];
-            } else {
-                [line setObject: [NSNull null] atIndexedSubscript: column];
-            }
+    MDTile* line = calloc(width, sizeof(MDTile));
+    for(int row = 0; row < height; ++row){
+        for(int col = 0; col < width ; ++col){
+            line[col] = GRID(row, col);
         }
-        newLine = [self treat: line];
-        for(column = 0; column < width; ++column){
-            [self putTile: [newLine objectAtIndex: column] row: row + 1 column: column + 1];
+
+        [self treat: line line: row];
+
+        for(int col = 0; col < width ; ++col){
+            GRID(row, col) = line[col];
         }
     }
+    free(line);
 }
 
 - (void) swipeToTheTop
 {
-    int row = 0, column = 0;
-    NSMutableArray* line;
-    NSArray* newLine;
-    MDTile* tile;
-
-    for(column = 0; column < width; ++column){
-        line = [NSMutableArray arrayWithCapacity: height];
-        for(row = 0; row < height; ++row){
-            tile = [self tileAtRow: row + 1 column: column + 1];
-            if(tile != nil){
-                [line setObject: tile atIndexedSubscript: row];
-            } else {
-                [line setObject: [NSNull null] atIndexedSubscript: row];
-            }
+    MDTile* line = calloc(height, sizeof(MDTile));
+    for(int col = 0; col < width; ++col){
+        for(int row = 0; row < height; ++row){
+            line[row] = GRID(row, col);
         }
-        newLine = [self treat: line];
-        for(row = 0; row < height; ++row){
-            [self putTile: [newLine objectAtIndex: row] row: row + 1 column: column + 1];
+
+        [self treat: line column: col];
+
+        for(int row = 0; row < height; ++row){
+            GRID(row, col) = line[row];
         }
     }
+    free(line);
 }
-
 
 - (void) swipeToTheRight
 {
-    int row = 0, column = 0;
-    NSMutableArray* line;
-    NSArray* newLine;
-    MDTile* tile;
-    for(row = 0; row < height; ++row){
-        line = [NSMutableArray arrayWithCapacity: width];
-        for(column = width - 1; column >= 0; --column){
-            tile = [self tileAtRow: row + 1 column: column + 1];
-            if(tile != nil){
-                [line setObject: tile atIndexedSubscript: width - column - 1];
-            } else {
-                [line setObject: [NSNull null] atIndexedSubscript: width - column - 1];
-            }
+    MDTile* line = calloc(width, sizeof(MDTile));
+    for(int row = 0; row < height; ++row){
+        for(int col = width - 1; col >= 0; --col){
+            line[col] = GRID(row, col);
         }
-        newLine = [self treat: line];
-        for(column = 0; column < width; ++column){
-            [self putTile: [newLine objectAtIndex: width - column - 1] row: row + 1 column: column + 1];
+
+        [self treat: line line: row];
+
+        for(int col = 0; col < width; ++col){
+            GRID(row, col) = line[width - col - 1];
         }
     }
+    free(line);
 }
 
 - (void) swipeToTheBottom
 {
-    int row = 0, column = 0;
-    NSMutableArray* line;
-    NSArray* newLine;
-    MDTile* tile;
-
-    for(column = 0; column < width; ++column){
-        line = [NSMutableArray arrayWithCapacity: height];
-        for(row = height - 1; row >= 0; --row){
-            tile = [self tileAtRow: row + 1 column: column + 1];
-            if(tile != nil){
-                [line setObject: tile atIndexedSubscript: height - row - 1];
-            } else {
-                [line setObject: [NSNull null] atIndexedSubscript: height - row - 1];
-            }
+    MDTile* line = calloc(height, sizeof(MDTile));
+    for(int col = 0; col < width; ++col){
+        for(int row = height - 1; row >= 0; --row){
+            line[row] = GRID(row, col);
         }
-        newLine = [self treat: line];
-        for(row = 0; row < height; ++row){
-            [self putTile: [newLine objectAtIndex: height - row - 1] row: row + 1 column: column + 1];
+
+        [self treat: line column: col];
+
+        for(int row = 0; row < height; ++row){
+            GRID(row, col) = line[height - row - 1];
         }
     }
-
+    free(line);
 }
 
 @end
+
+#undef GRID
+#undef CAN_COMBINE
+#undef COMBINE

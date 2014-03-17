@@ -5,14 +5,13 @@
 //  Created by Matthieu DESILE on 15/03/14.
 //  Copyright (c) 2014 Matthieu DESILE. All rights reserved.
 //
-#import "MDGrid.h"
-#import "MDTile.h"
 #import <XCTest/XCTest.h>
+
+#import "MDGrid.h"
 
 @interface MDGridTest : XCTestCase
 {
     MDGrid* grid;
-    MDTile* tile;
 }
 @end
 
@@ -22,7 +21,6 @@
 {
     [super setUp];
     grid = [[MDGrid alloc] initWithWidth: 4 andHeight: 4];
-    tile = [[MDTile alloc] initWithNumber: 2];
 }
 
 - (void)tearDown
@@ -39,32 +37,32 @@
 
 - (void) testTileCanBePlacedOnGrid
 {
-    XCTAssertNoThrow([grid putTile: tile row: 1 column: 1], @"tile can be placed on the grid");
+    XCTAssertNoThrow([grid putTile: 2 row: 1 column: 1], @"tile can be placed on the grid");
 }
 
 - (void) testGridIsOneIndexed
 {
-    XCTAssertThrows([grid putTile: tile row: 0 column: 0], @"first row is 1, first column is 1");
+    XCTAssertThrows([grid putTile: 2 row: 0 column: 0], @"first row is 1, first column is 1");
 }
 
 - (void) testCanRemoveTileFromGrid
 {
-    [grid putTile: tile row: 1 column: 1];
+    [grid putTile: 2 row: 1 column: 1];
     [grid removeTileAtRow: 1 column: 1];
-    XCTAssertNil([grid tileAtRow: 1 column: 1], @"empty cell is nil");
+    XCTAssertEqual([grid tileAtRow: 1 column: 1], kEmptyTile, @"empty cell is nil");
 }
 
 - (void) testGridCanTellWichTileIsWhere
 {
-    [grid putTile: tile row: 1 column: 1];
-    XCTAssertEqualObjects([grid tileAtRow: 1 column: 1], tile, @"??");
+    [grid putTile: 2 row: 1 column: 1];
+    XCTAssertEqual([grid tileAtRow: 1 column: 1], 2, @"??");
 }
 
 - (void) testGridHasDescription
 {
     MDGrid* grid2 = [[MDGrid alloc] initWithWidth: 2 andHeight: 2];
-    [grid2 putTile: tile row: 1 column: 1];
-    [grid2 putTile: tile row: 2 column: 1];
+    [grid2 putTile: 2 row: 1 column: 1];
+    [grid2 putTile: 2 row: 2 column: 1];
     NSString* expected = @"2 0 ;2 0 ;";
     NSString* desc = [grid2 description];
     XCTAssertTrue([desc isEqualToString: expected], @"");
