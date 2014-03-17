@@ -21,8 +21,8 @@
 }
 @property (strong) NSMutableSet* empty;
 
-- (void) treat: (MDTile*) line   line: (NSUInteger) index;
-- (void) treat: (MDTile*) line column: (NSUInteger) index;
+- (void) treat: (MDTile*) line   line: (NSUInteger) index direction: (MDGridMovementDirection) direction;
+- (void) treat: (MDTile*) line column: (NSUInteger) index direction: (MDGridMovementDirection) direction;
 
 - (BOOL) canSwipeToLeft;
 - (BOOL) canSwipeToRight;
@@ -185,19 +185,25 @@
 - (void) removeTileAtRow: (NSUInteger) row column: (NSUInteger) column
 {
     GRID(row - 1, column - 1) = kEmptyTile;
-    [empty addObject: [NSValue valueWithCGPoint: CGPointMake(row, column)]];
+    EMPTY_DEL(row, column);
 }
 
 #pragma mark - Movements
 
-- (void) treat: (MDTile*) line line: (NSUInteger) index
+- (void) treat: (MDTile*) line line: (NSUInteger) index direction: (MDGridMovementDirection) direction
 {
+    NSParameterAssert(index >= 1);
+    NSParameterAssert(index <= height);
+
     MDTile newLine[width];
     int k = 0;
     for(int i = 0; i < width; ++i){
         if(line[i] != kEmptyTile){
             newLine[k] = line[i];
-            if(delegate){ [delegate grid: self tileAtRow: index column: i movedToRow: index column: k]; }
+            if(delegate && i != k){
+                [delegate grid: self tileAtRow: index column: i + 1
+                                    movedToRow: index column: k + 1];
+            }
             ++k;
         }
     }
@@ -207,9 +213,17 @@
     for(int i = 0; i < width - 1; ++i){
         current = newLine[i];
         next = newLine[i + 1];
-        if(CAN_COMBINE(current, next)){
+        if(CAN_COMBINE(current, next) && current != kEmptyTile){
             newLine[i] = COMBINE(current, next);
-            if(delegate){ [delegate grid: self tile: newLine[i] appearedAtRow: index column: i]; }
+            if(delegate){
+                if(direction == RIGHT_TO_LEFT){
+                    [delegate grid: self tileAtRow: index column: i + 2 movedToRow: index column: i + 1];
+                    [delegate grid: self tileAtRow: index column: i + 1 changedTo: newLine[i]];
+                } else {
+                    [delegate grid: self tileAtRow: index column: width - i - 1 movedToRow: index column: width - i];
+                    [delegate grid: self tileAtRow: index column: width - i changedTo: newLine[i]];
+                }
+            }
             newLine[i + 1] = kEmptyTile;
         }
     }
@@ -219,13 +233,20 @@
     }
 }
 
-- (void) treat: (MDTile*) line column: (NSUInteger) index
+- (void) treat: (MDTile*) line column: (NSUInteger) index direction: (MDGridMovementDirection) direction
 {
+    NSParameterAssert(index >= 1);
+    NSParameterAssert(index <= width);
+
     MDTile newLine[height];
     int k = 0;
     for(int i = 0; i < height; ++i){
         if(line[i] != kEmptyTile){
             newLine[k] = line[i];
+            if(delegate && i != k){
+                [delegate grid: self tileAtRow: i + 1 column: index
+                                    movedToRow: k + 1 column: index];
+            }
             ++k;
         }
     }
@@ -235,9 +256,18 @@
     for(int i = 0; i < height - 1; ++i){
         current = newLine[i];
         next = newLine[i + 1];
-        if(CAN_COMBINE(current, next)){
+        if(CAN_COMBINE(current, next) && current != kEmptyTile){
             newLine[i] = COMBINE(current, next);
             newLine[i + 1] = kEmptyTile;
+            if(delegate){
+                if(direction == BOTTOM_TO_TOP){
+                    [delegate grid: self tileAtRow: i + 2 column: index movedToRow: i + 1 column: index];
+                    [delegate grid: self tileAtRow: i + 1 column: index changedTo: newLine[i]];
+                } else {
+                    [delegate grid: self tileAtRow: height - i - 1 column: index movedToRow: height - i column: index];
+                    [delegate grid: self tileAtRow: height - i column: index changedTo: newLine[i]];
+                }
+            }
         }
     }
     // copy
@@ -254,7 +284,7 @@
             line[col] = GRID(row, col);
         }
 
-        [self treat: line line: row];
+        [self treat: line line: row + 1 direction: RIGHT_TO_LEFT];
 
         for(int col = 0; col < width ; ++col){
             GRID(row, col) = line[col];
@@ -276,7 +306,7 @@
             line[row] = GRID(row, col);
         }
 
-        [self treat: line column: col];
+        [self treat: line column: col + 1 direction: BOTTOM_TO_TOP];
 
         for(int row = 0; row < height; ++row){
             GRID(row, col) = line[row];
@@ -298,7 +328,7 @@
             line[col] = GRID(row, col);
         }
 
-        [self treat: line line: row];
+        [self treat: line line: row + 1 direction: LEFT_TO_RIGHT];
 
         for(int col = 0; col < width; ++col){
             GRID(row, col) = line[width - col - 1];
@@ -321,7 +351,7 @@
             line[row] = GRID(row, col);
         }
 
-        [self treat: line column: col];
+        [self treat: line column: col + 1 direction: TOP_TO_BOTTOM];
 
         for(int row = 0; row < height; ++row){
             GRID(row, col) = line[height - row - 1];

@@ -9,6 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "MDGrid.h"
 
-@interface MDGridScene : SKScene
+@interface MDGridScene : SKScene <MDGridMovementDelegate>
 - (id) initWithSize: (CGSize) size andGrid: (MDGrid*) grid;
 @end

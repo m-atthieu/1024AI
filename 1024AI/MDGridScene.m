@@ -12,19 +12,27 @@
 @property (strong) MDGrid* grid;
 @property (strong) SKLabelNode* scoreNode;
 @property (strong) NSMutableArray* displayedTiles;
+@property (strong) NSMutableArray* moves;
+@property (strong) NSMutableArray* combines;
+@property (strong) NSMutableArray* appears;
 @end
 
 @implementation MDGridScene
 @synthesize grid;
 @synthesize scoreNode;
 @synthesize displayedTiles;
+@synthesize moves, combines, appears;
 
 - (id) initWithSize: (CGSize) size andGrid: (MDGrid*) aGrid
 {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         grid = aGrid;
+        grid.delegate = self;
         displayedTiles = [NSMutableArray arrayWithCapacity: grid.width * grid.height];
+        moves    = [NSMutableArray arrayWithCapacity: grid.width * grid.height];
+        combines = [NSMutableArray arrayWithCapacity: grid.width * grid.height];
+        appears  = [NSMutableArray arrayWithCapacity: grid.width * grid.height];
     }
     return self;
 }
@@ -33,11 +41,13 @@
 {
     grid = nil;
     displayedTiles = nil;
+    moves = nil;
+    combines = nil;
+    appears = nil;
 }
 
 - (void) didMoveToView:(SKView *)view
 {
-    NSLog(@"%s %f %f", __PRETTY_FUNCTION__, view.frame.size.width, view.frame.size.height);
     [self setupGridTiles];
     [self setupScoreNode];
     [self displayGrid];
@@ -75,7 +85,8 @@
     [self addChild: scoreNode];
 }
 
-- (SKShapeNode*) nodeForBackgroundTileAtRow: (NSUInteger) row column: (NSUInteger) column withColor: (SKColor*) color
+- (SKShapeNode*) nodeForBackgroundTileAtRow: (NSUInteger) row column: (NSUInteger) column
+                                  withColor: (SKColor*) color
 {
     CGFloat intersWidth = 10 * (grid.width);
     CGFloat tileWidth = (self.frame.size.width  - intersWidth) / grid.width;
@@ -146,9 +157,9 @@
     SKColor* tileColor = [SKColor colorWithRed: 0.54 green: 0.91 blue: 0 alpha: 1];
     // tiles text : 5a9800
     SKColor* textColor = [SKColor colorWithRed: 0.35 green: 0.58 blue: 0 alpha: 1];
-
+#ifdef DEBUG
     NSLog(@"%s %@", __PRETTY_FUNCTION__, grid);
-
+#endif
     for(int row = 1; row <= grid.height; ++row){
         for(int col = 1; col <= grid.width; ++col){
             MDTile tile = [grid tileAtRow: row column: col];
@@ -165,19 +176,45 @@
 
 - (void) swipe: (UISwipeGestureRecognizer*) gesture
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     switch(gesture.direction){
     case UISwipeGestureRecognizerDirectionLeft:
-	[grid swipeToTheLeft]; break;
+            [grid swipeToTheLeft]; break;
     case UISwipeGestureRecognizerDirectionRight:
-	[grid swipeToTheRight]; break;
+            [grid swipeToTheRight]; break;
     case UISwipeGestureRecognizerDirectionUp:
-	[grid swipeToTheTop]; break;
+            [grid swipeToTheTop]; break;
     case UISwipeGestureRecognizerDirectionDown:
-	[grid swipeToTheBottom]; break;
+            [grid swipeToTheBottom]; break;
     }
     [self undisplayAllTiles];
     [grid addRandomTiles: 1];
     [self displayGrid];
+}
+
+#pragma mark - MDGridMovementDelegate
+- (void) resetMovementQueues
+{
+    [moves removeAllObjects];
+    [combines removeAllObjects];
+    [appears removeAllObjects];
+}
+
+- (void) grid: (MDGrid *) grid
+    tileAtRow: (NSUInteger) row1 column: (NSUInteger) column1
+   movedToRow: (NSUInteger) row2 column: (NSUInteger) column2
+{
+    NSLog(@"%s %d %d -> %d %d", __PRETTY_FUNCTION__, row1, column1, row2, column2);
+}
+
+- (void) grid: (MDGrid *) grid tileAtRow: (NSUInteger) row column: (NSUInteger) column
+    changedTo: (MDTile) tile
+{
+    NSLog(@"%s %d %d => %d", __PRETTY_FUNCTION__, row, column, tile);
+}
+
+- (void) grid: (MDGrid *) grid tile: (MDTile) tile appearedAtRow: (NSUInteger) row
+       column: (NSUInteger) column
+{
+    NSLog(@"%s %d %d == %d", __PRETTY_FUNCTION__, row, column, tile);
 }
 @end
