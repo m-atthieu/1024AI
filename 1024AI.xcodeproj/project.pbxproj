@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C47EF02318D7727200077EB4 /* MDGridScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C47EF02218D7727200077EB4 /* MDGridScene.m */; };
 		C47EF02518D773EB00077EB4 /* MDGridDelegationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */; };
+		C4AE215618D79AB900762707 /* MDSwipe3x3Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */; };
+		C4AE215818D79BD800762707 /* MDSwipe4x4Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */; };
 		C4BA131418D4BA240015219B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131318D4BA240015219B /* Foundation.framework */; };
 		C4BA131618D4BA240015219B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131518D4BA240015219B /* CoreGraphics.framework */; };
 		C4BA131818D4BA240015219B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131718D4BA240015219B /* UIKit.framework */; };
@@ -16,8 +18,6 @@
 		C4BA132018D4BA240015219B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4BA131E18D4BA240015219B /* InfoPlist.strings */; };
 		C4BA132218D4BA240015219B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA132118D4BA240015219B /* main.m */; };
 		C4BA132618D4BA240015219B /* MDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA132518D4BA240015219B /* MDAppDelegate.m */; };
-		C4BA132918D4BA240015219B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BA132718D4BA240015219B /* Main_iPhone.storyboard */; };
-		C4BA132C18D4BA240015219B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BA132A18D4BA240015219B /* Main_iPad.storyboard */; };
 		C4BA132F18D4BA240015219B /* MDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA132E18D4BA240015219B /* MDViewController.m */; };
 		C4BA133618D4BA240015219B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BA133518D4BA240015219B /* Images.xcassets */; };
 		C4BA133D18D4BA250015219B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA133C18D4BA250015219B /* XCTest.framework */; };
@@ -26,7 +26,7 @@
 		C4BA134718D4BA250015219B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4BA134518D4BA250015219B /* InfoPlist.strings */; };
 		C4BA135318D4BA6A0015219B /* MDGridTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135218D4BA6A0015219B /* MDGridTest.m */; };
 		C4BA135618D4EDEF0015219B /* MDGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135518D4EDEF0015219B /* MDGrid.m */; };
-		C4BA135D18D598060015219B /* MDSwipeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135C18D598060015219B /* MDSwipeTest.m */; };
+		C4BA135D18D598060015219B /* MDSwipe2x2Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA135C18D598060015219B /* MDSwipe2x2Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +43,8 @@
 		C47EF02118D7727200077EB4 /* MDGridScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGridScene.h; sourceTree = "<group>"; };
 		C47EF02218D7727200077EB4 /* MDGridScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridScene.m; sourceTree = "<group>"; };
 		C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridDelegationTest.m; sourceTree = "<group>"; };
+		C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipe3x3Test.m; sourceTree = "<group>"; };
+		C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipe4x4Test.m; sourceTree = "<group>"; };
 		C4BA131018D4BA240015219B /* 1024AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1024AI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BA131318D4BA240015219B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C4BA131518D4BA240015219B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,8 +56,6 @@
 		C4BA132318D4BA240015219B /* 1024AI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "1024AI-Prefix.pch"; sourceTree = "<group>"; };
 		C4BA132418D4BA240015219B /* MDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDAppDelegate.h; sourceTree = "<group>"; };
 		C4BA132518D4BA240015219B /* MDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDAppDelegate.m; sourceTree = "<group>"; };
-		C4BA132818D4BA240015219B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		C4BA132B18D4BA240015219B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		C4BA132D18D4BA240015219B /* MDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDViewController.h; sourceTree = "<group>"; };
 		C4BA132E18D4BA240015219B /* MDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDViewController.m; sourceTree = "<group>"; };
 		C4BA133518D4BA240015219B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		C4BA135218D4BA6A0015219B /* MDGridTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridTest.m; sourceTree = "<group>"; };
 		C4BA135418D4EDEF0015219B /* MDGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGrid.h; sourceTree = "<group>"; };
 		C4BA135518D4EDEF0015219B /* MDGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGrid.m; sourceTree = "<group>"; };
-		C4BA135C18D598060015219B /* MDSwipeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipeTest.m; sourceTree = "<group>"; };
+		C4BA135C18D598060015219B /* MDSwipe2x2Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipe2x2Test.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +132,6 @@
 				C47EF02218D7727200077EB4 /* MDGridScene.m */,
 				C4BA132418D4BA240015219B /* MDAppDelegate.h */,
 				C4BA132518D4BA240015219B /* MDAppDelegate.m */,
-				C4BA132718D4BA240015219B /* Main_iPhone.storyboard */,
-				C4BA132A18D4BA240015219B /* Main_iPad.storyboard */,
 				C4BA132D18D4BA240015219B /* MDViewController.h */,
 				C4BA132E18D4BA240015219B /* MDViewController.m */,
 				C4BA133518D4BA240015219B /* Images.xcassets */,
@@ -160,7 +158,9 @@
 			children = (
 				C4BA134318D4BA250015219B /* Supporting Files */,
 				C4BA135218D4BA6A0015219B /* MDGridTest.m */,
-				C4BA135C18D598060015219B /* MDSwipeTest.m */,
+				C4BA135C18D598060015219B /* MDSwipe2x2Test.m */,
+				C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */,
+				C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */,
 				C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */,
 			);
 			path = 1024AITests;
@@ -253,8 +253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4BA133618D4BA240015219B /* Images.xcassets in Resources */,
-				C4BA132C18D4BA240015219B /* Main_iPad.storyboard in Resources */,
-				C4BA132918D4BA240015219B /* Main_iPhone.storyboard in Resources */,
 				C4BA132018D4BA240015219B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +286,9 @@
 			files = (
 				C4BA135318D4BA6A0015219B /* MDGridTest.m in Sources */,
 				C47EF02518D773EB00077EB4 /* MDGridDelegationTest.m in Sources */,
-				C4BA135D18D598060015219B /* MDSwipeTest.m in Sources */,
+				C4AE215618D79AB900762707 /* MDSwipe3x3Test.m in Sources */,
+				C4AE215818D79BD800762707 /* MDSwipe4x4Test.m in Sources */,
+				C4BA135D18D598060015219B /* MDSwipe2x2Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,22 +309,6 @@
 				C4BA131F18D4BA240015219B /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C4BA132718D4BA240015219B /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C4BA132818D4BA240015219B /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		C4BA132A18D4BA240015219B /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C4BA132B18D4BA240015219B /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		C4BA134518D4BA250015219B /* InfoPlist.strings */ = {
@@ -370,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

@@ -11,15 +11,31 @@
 #import "MDGridScene.h"
 
 @implementation MDViewController
+@synthesize frame;
+
+- (id) initWithFrame:(CGRect)aFrame
+{
+    if(self = [super init]){
+        frame = aFrame;
+    }
+    return self;
+}
+- (void) loadView
+{
+    SKView* view = [[SKView alloc] initWithFrame: frame];
+    self.view = view;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     // Configure the view.
-    SKView * skView = (SKView *)self.view;
+    SKView * skView = (SKView *) self.view;
+#ifdef DEBUG
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+#endif
     
     // Create and configure the scene.
     MDGrid* grid = [[MDGrid alloc] initWithWidth: 4 andHeight: 4];
@@ -30,7 +46,7 @@
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
-    [skView presentScene:scene];
+    [skView presentScene: scene];
 }
 
 - (BOOL)shouldAutorotate

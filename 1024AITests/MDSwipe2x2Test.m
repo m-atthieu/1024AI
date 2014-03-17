@@ -10,13 +10,13 @@
 
 #import "MDGrid.h"
 
-@interface MDSwipeTest : XCTestCase
+@interface MDSwipe2x2Test : XCTestCase
 {
     MDGrid* grid;
 }
 @end
 
-@implementation MDSwipeTest
+@implementation MDSwipe2x2Test
 
 - (void)setUp
 {

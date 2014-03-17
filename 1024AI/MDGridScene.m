@@ -37,10 +37,11 @@
 
 - (void) didMoveToView:(SKView *)view
 {
-    [self setupGestureRecognizers];
+    NSLog(@"%s %f %f", __PRETTY_FUNCTION__, view.frame.size.width, view.frame.size.height);
     [self setupGridTiles];
     [self setupScoreNode];
     [self displayGrid];
+    [self setupGestureRecognizers];
 }
 
 - (void) setupGestureRecognizers

@@ -7,12 +7,18 @@
 //
 
 #import "MDAppDelegate.h"
+#import "MDViewController.h"
 
 @implementation MDAppDelegate
+@synthesize window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    window = [[UIWindow alloc] initWithFrame: frame];
+    MDViewController* controller = [[MDViewController alloc] initWithFrame: frame];
+    window.rootViewController = controller;
+    [window makeKeyAndVisible];
     return YES;
 }
 							

@@ -10,5 +10,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface MDViewController : UIViewController
-
+@property (assign) CGRect frame;
+- (id) initWithFrame: (CGRect) frame;
 @end
