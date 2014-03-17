@@ -11,6 +11,7 @@
 		C47EF02518D773EB00077EB4 /* MDGridDelegationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */; };
 		C4AE215618D79AB900762707 /* MDSwipe3x3Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */; };
 		C4AE215818D79BD800762707 /* MDSwipe4x4Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */; };
+		C4AE215A18D7A78B00762707 /* MDEmptyManagementTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AE215918D7A78B00762707 /* MDEmptyManagementTest.m */; };
 		C4BA131418D4BA240015219B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131318D4BA240015219B /* Foundation.framework */; };
 		C4BA131618D4BA240015219B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131518D4BA240015219B /* CoreGraphics.framework */; };
 		C4BA131818D4BA240015219B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BA131718D4BA240015219B /* UIKit.framework */; };
@@ -45,6 +46,7 @@
 		C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGridDelegationTest.m; sourceTree = "<group>"; };
 		C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipe3x3Test.m; sourceTree = "<group>"; };
 		C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwipe4x4Test.m; sourceTree = "<group>"; };
+		C4AE215918D7A78B00762707 /* MDEmptyManagementTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEmptyManagementTest.m; sourceTree = "<group>"; };
 		C4BA131018D4BA240015219B /* 1024AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1024AI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BA131318D4BA240015219B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C4BA131518D4BA240015219B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,6 +164,7 @@
 				C4AE215518D79AB900762707 /* MDSwipe3x3Test.m */,
 				C4AE215718D79BD800762707 /* MDSwipe4x4Test.m */,
 				C47EF02418D773EB00077EB4 /* MDGridDelegationTest.m */,
+				C4AE215918D7A78B00762707 /* MDEmptyManagementTest.m */,
 			);
 			path = 1024AITests;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				C4AE215618D79AB900762707 /* MDSwipe3x3Test.m in Sources */,
 				C4AE215818D79BD800762707 /* MDSwipe4x4Test.m in Sources */,
 				C4BA135D18D598060015219B /* MDSwipe2x2Test.m in Sources */,
+				C4AE215A18D7A78B00762707 /* MDEmptyManagementTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

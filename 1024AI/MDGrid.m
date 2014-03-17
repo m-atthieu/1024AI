@@ -12,13 +12,17 @@
 #define CAN_COMBINE(t1, t2) ((t1) == (t2))
 #define COMBINE(t1, t2) ((t1) + (t2))
 
+#define EMPTY_ADD(row, col) [empty    addObject: NSStringFromCGPoint(CGPointMake(row, col))]
+#define EMPTY_DEL(row, col) [empty removeObject: NSStringFromCGPoint(CGPointMake(row, col))]
+
 @interface MDGrid ()
 {
     MDTile* _grid;
 }
 @property (strong) NSMutableSet* empty;
 
-- (NSArray*) treat: (NSArray*) line;
+- (void) treat: (MDTile*) line   line: (NSUInteger) index;
+- (void) treat: (MDTile*) line column: (NSUInteger) index;
 
 - (BOOL) canSwipeToLeft;
 - (BOOL) canSwipeToRight;
@@ -46,7 +50,7 @@
 	empty = [NSMutableSet set];
 	for(int i = 1; i <= width; ++i){
 	    for(int j = 1; j <= height; ++j){
-            [empty addObject: NSStringFromCGPoint(CGPointMake(i, j))];
+            EMPTY_ADD(i, j);
 	    }
 	}
 	
@@ -82,11 +86,11 @@
 - (void) addRandomTiles: (NSUInteger) toFill
 {
     for(NSUInteger i = 0; i < toFill; ++i){
-	NSString* s = [[empty allObjects] objectAtIndex: arc4random_uniform([empty count])];
-    CGPoint random = CGPointFromString(s);
-	[self putTile: 2 row: random.x column: random.y];
-	if(delegate){ [delegate grid: self tile: 2 appearedAtRow: random.x column: random.y]; }
-        [empty minusSet: [NSSet setWithObject: [NSValue valueWithCGPoint: random]]];
+        NSString* s = [[empty allObjects] objectAtIndex: arc4random_uniform([empty count])];
+        CGPoint random = CGPointFromString(s);
+        [self putTile: 2 row: random.x column: random.y];
+        if(delegate){ [delegate grid: self tile: 2 appearedAtRow: random.x column: random.y]; }
+        EMPTY_DEL(random.x, random.y);
     }
 }
 
@@ -94,18 +98,21 @@
 {
     if([empty count] != 0){ return NO; }
     
-    return [self canSwipeToLeft] || [self canSwipeToRight] || [self canSwipeToTop] || [self canSwipeToBottom];
+    return  [self canSwipeToLeft]  ||
+            [self canSwipeToRight] ||
+            [self canSwipeToTop]   ||
+            [self canSwipeToBottom];
 }
 
 - (BOOL) canSwipeToLeft
 {
     BOOL can = NO;
     for(int row = 0; row < height; ++row){
-	for(int col = 0; col < width - 1; ++col){
-	    if(CAN_COMBINE(GRID(row, col), GRID(row, col + 1))){
-		can = YES;
-	    }
-	}
+        for(int col = 0; col < width - 1; ++col){
+            if(CAN_COMBINE(GRID(row, col), GRID(row, col + 1))){
+                can = YES;
+            }
+        }
     }
     return can;
 }
@@ -114,11 +121,11 @@
 {
     BOOL can = NO;
     for(int row = 0; row < height; ++row){
-	for(int col = 1; col < width; ++col){
-	    if(CAN_COMBINE(GRID(row, col - 1), GRID(row, col))){
-		can = YES;
-	    }
-	}
+        for(int col = 1; col < width; ++col){
+            if(CAN_COMBINE(GRID(row, col - 1), GRID(row, col))){
+                can = YES;
+            }
+        }
     }
     return can;
 }
@@ -127,11 +134,11 @@
 {
     BOOL can = NO;
     for(int col = 0; col < width; ++col){
-	for(int row = 1; row < height; ++col){
-	    if(CAN_COMBINE(GRID(row, col), GRID(row - 1, col))){
-		can = YES;
-	    }
-	}
+        for(int row = 1; row < height; ++col){
+            if(CAN_COMBINE(GRID(row, col), GRID(row - 1, col))){
+                can = YES;
+            }
+        }
     } 
     return can;
 }
@@ -140,11 +147,11 @@
 {
     BOOL can = NO;
     for(int col = 0; col < width; ++col){
-	for(int row = 0; row < height - 1; ++col){
-	    if(CAN_COMBINE(GRID(row, col), GRID(row + 1, col))){
-		can = YES;
-	    }
-	}
+        for(int row = 0; row < height - 1; ++col){
+            if(CAN_COMBINE(GRID(row, col), GRID(row + 1, col))){
+                can = YES;
+            }
+        }
     } 
     return can;
 }
@@ -157,7 +164,11 @@
     NSParameterAssert(column >= 1);
     NSParameterAssert(row <= height);
     NSParameterAssert(column <= width);
-    
+    if(tile == kEmptyTile){
+        EMPTY_ADD(row, column);
+    } else {
+        EMPTY_DEL(row, column);
+    }
     GRID(row - 1, column - 1) = tile;
 }
 
@@ -184,27 +195,27 @@
     MDTile newLine[width];
     int k = 0;
     for(int i = 0; i < width; ++i){
-	if(line[i] != kEmptyTile){
-	    newLine[k] = line[i];
-	    if(delegate){ [delegate grid: self tileAtRow: index column: i movedToRow: index column: k]; }
-	    ++k;
-	}
+        if(line[i] != kEmptyTile){
+            newLine[k] = line[i];
+            if(delegate){ [delegate grid: self tileAtRow: index column: i movedToRow: index column: k]; }
+            ++k;
+        }
     }
     for(; k < width; ++k){ newLine[k] = kEmptyTile; }
 
     MDTile current, next;
     for(int i = 0; i < width - 1; ++i){
-	current = newLine[i];
-	next = newLine[i + 1];
-	if(CAN_COMBINE(current, next)){
-	    newLine[i] = COMBINE(current, next);
-	    if(delegate){ [delegate grid: self tile: newLine[i] appearedAtRow: index column: i]; }
-	    newLine[i + 1] = kEmptyTile;
-	}
+        current = newLine[i];
+        next = newLine[i + 1];
+        if(CAN_COMBINE(current, next)){
+            newLine[i] = COMBINE(current, next);
+            if(delegate){ [delegate grid: self tile: newLine[i] appearedAtRow: index column: i]; }
+            newLine[i + 1] = kEmptyTile;
+        }
     }
     // copy
     for(int i = 0; i < width; ++i){
-	line[i] = newLine[i];
+        line[i] = newLine[i];
     }
 }
 
@@ -213,25 +224,25 @@
     MDTile newLine[height];
     int k = 0;
     for(int i = 0; i < height; ++i){
-	if(line[i] != kEmptyTile){
-	    newLine[k] = line[i];
-	    ++k;
-	}
+        if(line[i] != kEmptyTile){
+            newLine[k] = line[i];
+            ++k;
+        }
     }
     for(; k < height; ++k){ newLine[k] = kEmptyTile; }
 
     MDTile current, next;
     for(int i = 0; i < height - 1; ++i){
-	current = newLine[i];
-	next = newLine[i + 1];
-	if(CAN_COMBINE(current, next)){
-	    newLine[i] = COMBINE(current, next);
-	    newLine[i + 1] = kEmptyTile;
-	}
+        current = newLine[i];
+        next = newLine[i + 1];
+        if(CAN_COMBINE(current, next)){
+            newLine[i] = COMBINE(current, next);
+            newLine[i + 1] = kEmptyTile;
+        }
     }
     // copy
     for(int i = 0; i < width; ++i){
-	line[i] = newLine[i];
+        line[i] = newLine[i];
     }
 }
 
@@ -247,6 +258,11 @@
 
         for(int col = 0; col < width ; ++col){
             GRID(row, col) = line[col];
+            if(line[col] == kEmptyTile){
+                EMPTY_ADD(row + 1, col + 1);
+            } else {
+                EMPTY_DEL(row + 1, col + 1);
+            }
         }
     }
     free(line);
@@ -264,6 +280,11 @@
 
         for(int row = 0; row < height; ++row){
             GRID(row, col) = line[row];
+            if(line[col] == kEmptyTile){
+                EMPTY_ADD(row + 1, col + 1);
+            } else {
+                EMPTY_DEL(row + 1, col + 1);
+            }
         }
     }
     free(line);
@@ -281,6 +302,12 @@
 
         for(int col = 0; col < width; ++col){
             GRID(row, col) = line[width - col - 1];
+            if(line[width - col - 1] == kEmptyTile){
+                EMPTY_ADD(row + 1, col + 1);
+            } else {
+                EMPTY_DEL(row + 1, col + 1);
+            }
+
         }
     }
     free(line);
@@ -298,6 +325,12 @@
 
         for(int row = 0; row < height; ++row){
             GRID(row, col) = line[height - row - 1];
+            if(line[height - row - 1] == kEmptyTile){
+                EMPTY_ADD(row + 1, col + 1);
+            } else {
+                EMPTY_DEL(row + 1, col + 1);
+            }
+
         }
     }
     free(line);
@@ -308,3 +341,5 @@
 #undef GRID
 #undef CAN_COMBINE
 #undef COMBINE
+#undef EMPTY_ADD
+#undef EMPTY_DEL

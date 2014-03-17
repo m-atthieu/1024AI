@@ -38,9 +38,7 @@
 #endif
     
     // Create and configure the scene.
-    MDGrid* grid = [[MDGrid alloc] initWithWidth: 4 andHeight: 4];
-    //[grid putTile: 4 row: 1 column: 1];
-    //[grid putTile: 2 row: 2 column: 1];
+    MDGrid* grid = [[MDGrid alloc] initWithWidth: 2 andHeight: 2];
     [grid addRandomTiles: 2];
     SKScene * scene = [[MDGridScene alloc] initWithSize: skView.bounds.size andGrid: grid];
     scene.scaleMode = SKSceneScaleModeAspectFill;
